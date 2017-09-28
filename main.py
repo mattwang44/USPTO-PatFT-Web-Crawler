@@ -2,7 +2,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidget,QTableWidgetItem, QMainWindow, QWhatsThis, QLabel, QWidget,\
  QPushButton, QInputDialog, QLineEdit, QFileDialog, QVBoxLayout, QItemDelegate, QFormLayout
-from PyQt5.QtCore import Qt, QDir
+from PyQt5.QtCore import Qt, QDir, QUrl
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
 from pyqtwindow import Ui_MainWindow as ui # export from Qt Creator
 # Web Crawling packages
 import  csv, urllib, requests
@@ -79,6 +81,12 @@ class MainWindow(QMainWindow, ui):
         #setColumnWidth(0, 85)
         #self.TABLE.resizeColumnsToContents()
         #.setRowHeight(row, 18)
+        self.webView = QWebEngineView(self.GL)
+        self.webView.setGeometry(QtCore.QRect(0, 0, 1011, 491))
+        self.webView.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+        self.webView.load(QUrl("http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&u=%2Fnetahtml%2FPTO%2Fsearch-adv.htm&r=1&p=1&f=G&l=50&d=PTXT&S1=9532164.PN.&OS=pn/9532164&RS=PN/9532164"))
+        self.webView.show()
+        
         
         # Events
         self.statusBar.showMessage('Welcome!')
@@ -93,7 +101,23 @@ class MainWindow(QMainWindow, ui):
         self.PDFD.clicked.connect(self.PDFDOWNLOAD)
         self.INFO.clicked.connect(self.Crawler)
         self.STOPLOOP.clicked.connect(self.stopbool)
+        self.web_PDF.clicked.connect(self.showPDF)
+        self.web_PAT.clicked.connect(self.showPAT)        
         self.stop = False
+
+    def showPAT(self):
+        PN = self.PNweb.text()
+        _, PatFT_link, _, _, _ = ptc.PN_str_and_url(PN)
+        self.webView.load(QUrl(PatFT_link))
+        self.webView.show()
+
+    def showPDF(self):
+        PN = self.PNweb.text()
+        _, _, _, PDF_link_full, _ = ptc.PN_str_and_url(PN)
+        print(PDF_link_full)
+        #self.webView.load(QUrl(PDF_link_full))
+        #self.webView.show()
+        QDesktopServices.openUrl(QUrl(PDF_link_full))
 
     def stopbool(self):
         self.stop = True

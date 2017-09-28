@@ -180,7 +180,6 @@ def Soup2Info(Item, soup, PatFT_link, PDF_link,):
     if 14 in Item:
         result.append('=HYPERLINK("'+PDF_link+'")')
     return result
-
 def PN_str_and_url(PN):
     # clean pn string
     if type(PN) is str:
@@ -192,10 +191,13 @@ def PN_str_and_url(PN):
     PatFT_link = "http://patft.uspto.gov/netacgi/nph-Parser?Sect2=PTO1&Sect2=HITOFF&p=1&u=/netahtml/PTO/search-bool.html&r=1&f=G&l=50&d=PALL&RefSrch=yes&Query=PN/"+PN
 
     # PN_PDF: PN in 8 digits format
-    if PN[1].isalpha(): #RE/RX/PP/AI
-        PN_PDF = PN[0:2]+'0'*(8-len(PN))+PN[2:]
-    elif PN[0].isalpha(): #X/D/T/H
-        PN_PDF = PN[0:1]+'0'*(8-len(PN))+PN[1:]
+    if len(PN)>=2:
+        if PN[1].isalpha(): #RE/RX/PP/AI
+            PN_PDF = PN[0:2]+'0'*(8-len(PN))+PN[2:]
+        elif PN[0].isalpha(): #X/D/T/H
+            PN_PDF = PN[0:1]+'0'*(8-len(PN))+PN[1:]
+        else:
+            PN_PDF = '0'*(8-len(PN))+PN
     else:
         PN_PDF = '0'*(8-len(PN))+PN
 
@@ -305,7 +307,7 @@ def PDF_section_pageNo(section_link):
 
 # PDF download
 def PDF_download(PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page, PDF_download_demand):
-    if 2>1:#try:
+    try:
         if PDF_download_demand == 0: # Don't need to download PDF
             return True, 0 
 
@@ -328,7 +330,7 @@ def PDF_download(PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page, PDF_downl
             else:
                 return True, str(int(end_page)-int(start_page)) + ' page(s) of drawing PDF is downloaded.'
     # failed to doanload PDF (unkown reason)
-    if 2<1:#except:
+    except:
         return False, 'Failed to download PDF.'
 
 
