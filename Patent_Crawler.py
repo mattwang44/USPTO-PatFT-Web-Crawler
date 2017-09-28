@@ -1,4 +1,5 @@
-# Web Crawling
+from PyQt5.QtWidgets import QApplication
+ # Web Crawling
 from bs4 import BeautifulSoup, Comment
 import html5lib, re, urllib, requests
 # Data processing
@@ -275,6 +276,7 @@ def info_fetcher(PN, Item, soup, PatFT_link, PDF_link):
 
 def PDF_download_single_link(PDF_link, filename):
     response = urllib.request.urlopen(PDF_link)
+    QApplication.processEvents()
     file = open(filename, 'wb')
     file.write(response.read())
     file.close()
@@ -287,12 +289,12 @@ def PDF_download_multiple_links(PDF_links, filename):
     merger = PdfFileMerger()
     names = [filename[0:-4]+str(i)+'.pdf' for i in range(amount)]
     for i in range(amount):
+        QApplication.processEvents()
         name = names[i]
         PDF_download_single_link(PDF_links[i], name)
         with open(name, "rb") as page:
             merger.append(PdfFileReader(page))
     merger.write(filename)
-
     for i in range(amount):
         os.remove(names[i])
         
@@ -323,6 +325,8 @@ def PDF_download(PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page, PDF_downl
             start_page = PDF_section_pageNo(PDF_access+'&SectionNum=2')
             # "Pecifications" section
             end_page = PDF_section_pageNo(PDF_access+'&SectionNum=3')
+            if end_page < start_page:
+                end_page = PDF_section_pageNo(PDF_access+'&SectionNum=1')
             PDF_links = [PDF_link_page+str(i)+'.pdf' for i in range(start_page, end_page)]
             PDF_download_multiple_links(PDF_links, 'US'+PN.upper()+'_pic.pdf')
             if PDF_download_demand == 3:

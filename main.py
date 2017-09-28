@@ -1,7 +1,7 @@
 # PyQt package
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidget,QTableWidgetItem, QMainWindow, QWhatsThis, QLabel, QWidget,\
- QPushButton, QInputDialog, QLineEdit, QFileDialog, QVBoxLayout, QItemDelegate, QFormLayout
+ QPushButton, QInputDialog, QLineEdit, QFileDialog, QVBoxLayout, QItemDelegate, QFormLayout, QApplication
 from PyQt5.QtCore import Qt, QDir, QUrl
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
@@ -31,12 +31,14 @@ def getInfofromQuery_1st_page(query, db):
     search_page = "http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&u=%2Fnetahtml%2FPTO%2Fsearch-adv.htm&r=0&p=1&f=S&l=50&Query="+query+"&d=" + db
     soup_1st_page = URL2Soup( search_page )
     i = 0
+    print(ptc.TTL(soup_1st_page))
     for aa in soup_1st_page.find_all('strong'):
         i = i + 1
         if i == 3:
             total_PTnumber = int(aa.next_element)
             return total_PTnumber, getPNfromSoup_one_page(soup_1st_page), ''
     # if no patent: only one 'strong' tag can be found
+    
     for aa in soup_1st_page.find_all('span'):
         if 'patents' in aa.next_element.next_element:
             return 0, [], 'Error: No patent can be found with the query!'
@@ -114,7 +116,6 @@ class MainWindow(QMainWindow, ui):
     def showPDF(self):
         PN = self.PNweb.text()
         _, _, _, PDF_link_full, _ = ptc.PN_str_and_url(PN)
-        print(PDF_link_full)
         #self.webView.load(QUrl(PDF_link_full))
         #self.webView.show()
         QDesktopServices.openUrl(QUrl(PDF_link_full))
