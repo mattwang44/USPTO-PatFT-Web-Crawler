@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidget,QTableWidgetItem, QMainWindow, QWhatsThis, QLabel, QWidget,\
  QPushButton, QInputDialog, QLineEdit, QFileDialog, QVBoxLayout, QItemDelegate, QFormLayout, QApplication
 from PyQt5.QtCore import Qt, QDir, QUrl
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
 from pyqtwindow import Ui_MainWindow as ui # export from Qt Creator
 # Web Crawling packages
@@ -14,6 +14,8 @@ import numpy as np
 import time, datetime
 import shutil, os, gc 
 import Patent_Crawler as ptc
+import images_qr
+
 
 def URL2Soup( search_page ):
     try:
@@ -25,13 +27,12 @@ def URL2Soup( search_page ):
     soup = BeautifulSoup(response, "html5lib")
     return soup
 
-# Get total number of patent and the PNs (at most 50) on the 1st searching page
+# Get total amount of patent and the PNs (at most 50) on the 1st searching page
 def getInfofromQuery_1st_page(query, db):
     #QApplication.processEvents()
     search_page = "http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&u=%2Fnetahtml%2FPTO%2Fsearch-adv.htm&r=0&p=1&f=S&l=50&Query="+query+"&d=" + db
     soup_1st_page = URL2Soup( search_page )
     i = 0
-    print(ptc.TTL(soup_1st_page))
     for aa in soup_1st_page.find_all('strong'):
         i = i + 1
         if i == 3:
@@ -60,6 +61,7 @@ class MainWindow(QMainWindow, ui):
         self.setupUi(self)
         # Additional Initialization
         Initial_path = QDir.currentPath()
+        self.setWindowIcon(QIcon(":/IAID.ico"))
         self.PNloc.setText(Initial_path+'/PN.CSV')
         self.Querybox.setVisible(False)
         self.DB.setVisible(False)
@@ -124,9 +126,12 @@ class MainWindow(QMainWindow, ui):
         self.stop = True
 
     def PDFDOWNLOAD(self):
+        self.stop = False
+        self.PDFD.setEnabled(False)
         # demand: 0=do not download, 1=download full text, 2=download drawing section, 3=download both
         if self.cs2b(self.PDFfull)==0 and self.cs2b(self.PDFdraw)==0:
             self.statusBar.showMessage('Please select something to download!')
+            self.PDFD.setEnabled(True)
             return
         elif self.cs2b(self.PDFfull)==1 and self.cs2b(self.PDFdraw)==0:
             pdf_demand = 1
@@ -138,6 +143,7 @@ class MainWindow(QMainWindow, ui):
         # return if PN hasn't been imported
         if self.MODEL.headerData(0,Qt.Horizontal) != 'Patent No.':
             self.statusBar.showMessage('Please import Patent Numers first!')
+            self.PDFD.setEnabled(True)
             return
 
         error_download = 0
@@ -147,15 +153,15 @@ class MainWindow(QMainWindow, ui):
             os.makedirs(PDF_loc)
         os.chdir(PDF_loc)  
 
-        row = self.MODEL.rowCount()
-        for i in range(row):
+        totalrow = self.MODEL.rowCount()
+        for i in range(totalrow):
             if self.stop:
                 break
             QApplication.processEvents()
             PN = str(self.MODEL.data(self.MODEL.index(i,0)))
             PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page = ptc.PN_str_and_url(PN)
             status, mes = ptc.PDF_download(PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page, pdf_demand)
-            self.statusBar.showMessage('US' + PN + ' ( ' +  str(i+1) + ' / ' + str(row)+ ' ): ' + mes  )
+            self.statusBar.showMessage('US' + PN + ' ( ' +  str(i+1) + ' / ' + str(totalrow)+ ' ): ' + mes  )
             if not status:
                 error_download += 1
         if self.stop:
@@ -166,11 +172,15 @@ class MainWindow(QMainWindow, ui):
         else:
             self.statusBar.showMessage('PDF downloaded, but ' + str(error_download) + 'errors exist')
         os.chdir(cwd)  
+        self.PDFD.setEnabled(True)
 
     def Crawler(self):
+        self.INFO.setEnabled(False)
+        self.stop = False
         # return if PN hasn't been imported
         if self.MODEL.headerData(0,Qt.Horizontal) != 'Patent No.':
             self.statusBar.showMessage('Please import Patent Numers first!')
+            self.INFO.setEnabled(True)
             return        
 
         self.statusBar.showMessage('Fetching info for you...')
@@ -282,9 +292,9 @@ class MainWindow(QMainWindow, ui):
                 QApplication.processEvents()
             # Number of referenced by
             if 10 in Item:
-                if 2>1:#try:
+                try:
                     self.MODEL.setItem(i,j,QtGui.QStandardItem(ptc.REF(PN)))
-                if 1>2:#except:
+                except:
                     self.MODEL.setItem(i,j,QtGui.QStandardItem('error'))
                 j += 1
                 QApplication.processEvents()
@@ -306,9 +316,9 @@ class MainWindow(QMainWindow, ui):
                 QApplication.processEvents()
             # Application Number
             if 13 in Item:
-                if 2>1:#try:
+                try:
                     self.MODEL.setItem(i,j,QtGui.QStandardItem(ptc.ApNo(soup)))
-                if 1>2 :#except:
+                except:
                     self.MODEL.setItem(i,j,QtGui.QStandardItem('error'))
                 j += 1
                 QApplication.processEvents()
@@ -334,15 +344,20 @@ class MainWindow(QMainWindow, ui):
             self.statusBar.showMessage('The program is stopped on your demand.')
         else: 
             self.statusBar.showMessage('Done.')
+        self.INFO.setEnabled(True)
     
     # Filter PNs and delete them
     def TABLE_FILTER(self):
+        self.FILTER.setEnabled(False)
+        self.stop = False
         PNtype_limit = np.array([self.cs2b(self.ut), self.cs2b(self.ds), self.cs2b(self.pp), self.cs2b(self.ot)]) 
         if self.MODEL.headerData(0,Qt.Horizontal) != 'Patent No.':
             self.statusBar.showMessage('Please import Patent Numers first!')
+            self.FILTER.setEnabled(True)
             return
         if self.cs2b(self.APDdis) == 0 and self.cs2b(self.ISDdis) == 0 and (self.cs2b(self.all) == 1 or sum(PNtype_limit) == 4):
             self.statusBar.showMessage('Nothing will be filtered.')
+            self.FILTER.setEnabled(True)
             return
         row = self.MODEL.rowCount()
         
@@ -397,7 +412,8 @@ class MainWindow(QMainWindow, ui):
             for row_index in delete_list:
                 self.MODEL.removeRow(row_index-len(delete_list_arr[delete_list_arr<row_index]))    
                 self.statusBar.showMessage('Deleting the filtered data.....' ) 
-        self.statusBar.showMessage('Done Filtering: ' + str(len(delete_list)) + ' out of '  + str(row) + ' patents are filtered.' )   
+        self.statusBar.showMessage('Done Filtering: ' + str(len(delete_list)) + ' out of '  + str(row) + ' patents are filtered.' )  
+        self.FILTER.setEnabled(True) 
 
     # import PN with a existing CSV file
     def import_PNlist_CSV(self, list_loc):
@@ -406,7 +422,7 @@ class MainWindow(QMainWindow, ui):
             count = 0
             for row in reader:
                 count += 1
-                self.statusBar.showMessage('There are %d patent numbers in the list.' % count)
+                self.statusBar.showMessage('There are %d patent numbers in the list. Preparing the list...' % count)
                 QApplication.processEvents()
             csvr.seek(0)
             self.MODEL.clear()            
@@ -453,6 +469,11 @@ class MainWindow(QMainWindow, ui):
                 self.MODEL.setHorizontalHeaderLabels(['Patent No.', 'Errors'])
 
     def importPN(self):
+        self.IMPORT.setEnabled(False)
+        self.FILTER.setEnabled(False)
+        self.INFO.setEnabled(False)
+        self.PDFD.setEnabled(False)
+        self.stop = False
         if self.PNbt.isChecked():
             self.MODEL.clear()  
             list_loc = self.PNloc.text()
@@ -503,6 +524,10 @@ class MainWindow(QMainWindow, ui):
                     self.statusBar.showMessage('The program is stopped on your demand.')
                 else:
                     self.statusBar.showMessage('Patent list is ready! There are %d patents.' % total_PTnumber)
+        self.IMPORT.setEnabled(True)
+        self.FILTER.setEnabled(True)
+        self.INFO.setEnabled(True)
+        self.PDFD.setEnabled(True)
         
     def handleSave(self):
         path = self.FileDialog2Line_OutCSV()

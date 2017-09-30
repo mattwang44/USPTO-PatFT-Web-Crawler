@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/" >
+    <file>IAID.ico</file>
+  </qresource>
+</RCC>

@@ -56,7 +56,7 @@
       <x>10</x>
       <y>22</y>
       <width>1031</width>
-      <height>581</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="font">
@@ -81,7 +81,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>448</y>
+        <y>460</y>
         <width>441</width>
         <height>91</height>
        </rect>
@@ -213,7 +213,7 @@
       <property name="geometry">
        <rect>
         <x>460</x>
-        <y>448</y>
+        <y>460</y>
         <width>561</width>
         <height>91</height>
        </rect>
@@ -445,7 +445,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Please select a CSV file containing Patent No. (9 digits) in the 1st column.</string>
+        <string>Please select a CSV file containing Patent No. in the 1st column.</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="PNbt">
@@ -532,7 +532,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>106</y>
+        <y>110</y>
         <width>441</width>
         <height>191</height>
        </rect>
@@ -957,7 +957,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>300</y>
+        <y>312</y>
         <width>441</width>
         <height>141</height>
        </rect>
@@ -1353,7 +1353,7 @@
         <x>460</x>
         <y>12</y>
         <width>561</width>
-        <height>428</height>
+        <height>441</height>
        </rect>
       </property>
       <property name="font">
@@ -1444,14 +1444,6 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-    <addaction name="actionVisit_Github_Repo"/>
-    <addaction name="actionAbout_2"/>
-   </widget>
-   <addaction name="menuAbout"/>
   </widget>
   <action name="actionVisit_Github_Repo">
    <property name="text">
