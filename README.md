@@ -12,7 +12,7 @@ The source code has packaged with pyinstaller in Windows
 ## Instruction 
 You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).  
 ### Patent Fetcher
-<img src="./pic/ins.png" width="500">
+<img src="./pic/ins.png">
 (1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table
 1. Insert the patent numbers (PNs) to be processed in following ways:  
    (a) Choose a **CSV file with PNs in the first coulumn**.   
@@ -29,7 +29,7 @@ You can follow the instruction below or watch this [video](https://www.youtube.c
 5. The **table can be saved** as a CSV file anytime.  
 
 ### Browser  
-<img src="./pic/browser.png" width="500">
+<img src="./pic/browser.png">
 In the second page, you can insert PN to show the PatFT web of this patent or open PDF with your default browser.
 
 ## Caution
