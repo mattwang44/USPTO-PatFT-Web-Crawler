@@ -1,8 +1,8 @@
 # Web Crawler of USPTO PatFT Database
 Crawler for fetching information of US Patents and batch PDF download.  
 preview:  
-<img src="./pic/preview.png" width="350">
-<img src="./pic/browser.png" width="350">
+<img src="./pic/preview.png" width="370">
+<img src="./pic/browser.png" width="370">
   
 ## Execution File Download
 The source code has packaged with pyinstaller in Windows  
@@ -14,18 +14,18 @@ You can follow the instruction below or watch this [video](https://www.youtube.c
 <img src="./pic/ins.png">  
 (1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table
 1. Insert the patent numbers (PNs) to be processed in following ways:  
-   (a) Choose a CSV file with PNs in the first coulumn   
-   (b) Search with query. (The query should examined on PatFT.)  
+   (a) Choose a **CSV file with PNs in the first coulumn**.   
+   (b) **Search with query**. (The query should examined on PatFT.)  
    The PNs should be shown in the table.
 
-2. (Optional) Filter the shown PNs with setting the patent types, range of application date & issue date.  
+2. (Optional) Filtering the shown PNs with **setting the patent types, range of application date & issue date**.  
    The filtered PNs are also shown on the table but will be deleted in the end of this process.
 
-3. Fetching the information of patnets shown in the table by web crawling.  
+3. **Fetching the information** of patents shown in the table by web crawling.  
 
-4. Download PDF of full-text or drawing section (or both simultaneously) of patents shown in the table.
+4. Download **PDF of full-text or drawing section** (or both simultaneously) of patents shown in the table.
 
-5. The table can be saved as a CSV file anytime.
+5. The **table can be saved** as a CSV file anytime.
 
 ## Caution
 1. The program has some problems when fetching information of the patents issued before 1976. Still working on it.
