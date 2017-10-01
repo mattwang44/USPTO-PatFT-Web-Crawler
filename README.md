@@ -2,7 +2,7 @@
 Crawler for fetching information of US Patents and batch PDF download.  
 preview:  
 <img src="./pic/preview.png" width="370">
-<img src="./pic/browser.png" width="370">
+
   
 ## Execution File Download
 The source code has packaged with pyinstaller in Windows  
@@ -10,8 +10,9 @@ The source code has packaged with pyinstaller in Windows
 2.[Single .exe file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
 
 ## Instruction 
-You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).    
-<img src="./pic/ins.png">  
+You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).  
+### Patent Fetcher
+<img src="./pic/ins.png" width="500">
 (1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table
 1. Insert the patent numbers (PNs) to be processed in following ways:  
    (a) Choose a **CSV file with PNs in the first coulumn**.   
@@ -25,7 +26,11 @@ You can follow the instruction below or watch this [video](https://www.youtube.c
 
 4. Download **PDF of full-text or drawing section** (or both simultaneously) of patents shown in the table.
 
-5. The **table can be saved** as a CSV file anytime.
+5. The **table can be saved** as a CSV file anytime.  
+
+### Browser  
+<img src="./pic/browser.png" width="500">
+In the second page, you can insert PN to show the PatFT web of this patent or open PDF with your default browser.
 
 ## Caution
 1. The program has some problems when fetching information of the patents issued before 1976. Still working on it.
