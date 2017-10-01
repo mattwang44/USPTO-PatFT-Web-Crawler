@@ -3,8 +3,10 @@ Crawler for fetching information of US Patents and batch PDF download.
 preview:  
 <img src="./pic/preview.png">
 
-  
-## Execution File Download
+## Motivation
+I've participated in patent analyzation projects since Apr. 2017. Our team need to search with certain query and examine if each resulting patent is suitable for our topic and then analyze remained patents. I found that we can download bulk patent data only by searching certain words, names, or regions via [Download patent data](https://developer.uspto.gov/data/bulk-search) and [PAIR Bulk Data](https://pairbulkdata.uspto.gov) from [USPTO's Open Data Portal](https://developer.uspto.gov/), which aren not very useful for us, and suitable tools that can be found on the Internet are all charged. So, I started to build a Python program and finished the basic functions by May, which accelerated the progress of project. To made this program more user friendly, I revised the code and made an UI with PyQt5 after the end of old project and before the beginning of the new one.
+  
+## Download Execution File 
 The source code has packaged with pyinstaller in Windows  
 1.[Normal package](https://drive.google.com/open?id=0B4zCzLRoIx8eeWRwN1M3dFNTUE0)  
 2.[Single .exe file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
