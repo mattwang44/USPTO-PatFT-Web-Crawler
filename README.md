@@ -12,8 +12,8 @@ The source code has packaged with pyinstaller in Windows
 ## Instruction 
 You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).  
 ### Patent Fetcher
-<img src="./pic/ins.png">
 (1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table  
+<img src="./pic/ins.png">
 
 1. Insert the patent numbers (PNs) to be processed in following ways:  
    (a) Choose a **CSV file with PNs in the first coulumn**.   
