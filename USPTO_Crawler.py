@@ -16,14 +16,23 @@ import shutil, os, gc
 import Patent_Crawler as ptc
 import images_qr
 
-
 def URL2Soup( search_page ):
     try:
-        requested = urllib.request.urlopen(search_page)
-        response = requested.read()
+        soup = URL2Soup1( search_page )
     except:
-        result = requests.get(search_page) 
-        response = result.content
+        soup = URL2Soup2( search_page )
+    return soup
+def URL2Soup1( search_page ):
+    requested = urllib.request.urlopen(search_page)
+    response = requested.read()
+    #except:
+    #    result = requests.get(search_page) 
+    #    response = result.content
+    soup = BeautifulSoup(response, "html5lib")
+    return soup
+def URL2Soup2( search_page ):
+    result = requests.get(search_page) 
+    response = result.content
     soup = BeautifulSoup(response, "html5lib")
     return soup
 
@@ -174,6 +183,7 @@ class MainWindow(QMainWindow, ui):
         os.chdir(cwd)  
         self.PDFD.setEnabled(True)
 
+
     def Crawler(self):
         self.INFO.setEnabled(False)
         self.stop = False
@@ -208,12 +218,42 @@ class MainWindow(QMainWindow, ui):
                 continue
             PN, PatFT_link, PN_PDF, PDF_link_full, PDF_link_page = ptc.PN_str_and_url(PN)
             soup = URL2Soup(PatFT_link)
+            ttl = ptc.TTL(soup)
+            if len(ttl)<2:
+                time.sleep(1)
+                QApplication.processEvents()
+                soup = URL2Soup1(PatFT_link)
+                ttl = ptc.TTL(soup)
+                if len(ttl)<2:
+                    time.sleep(1)
+                    QApplication.processEvents()
+                    soup = URL2Soup1(PatFT_link)
+                    ttl = ptc.TTL(soup)
+                    if len(ttl)<2:
+                        time.sleep(1)
+                        QApplication.processEvents()
+                        soup = URL2Soup1(PatFT_link)
+                        ttl = ptc.TTL(soup)
+                        if len(ttl)<2:
+                            time.sleep(1)
+                            QApplication.processEvents()
+                            soup = URL2Soup2(PatFT_link)
+                            ttl = ptc.TTL(soup)
+                            if len(ttl)<2:
+                                time.sleep(1)
+                                QApplication.processEvents()
+                                soup = URL2Soup2(PatFT_link)
+                                ttl = ptc.TTL(soup)
+                                if len(ttl)<2:
+                                    time.sleep(1)
+                                    QApplication.processEvents()
+                                    soup = URL2Soup2(PatFT_link)
+                                    ttl = ptc.TTL(soup)
             j = 1
-
             #Title
             if 0 in Item:
                 try:
-                    self.MODEL.setItem(i,j,QtGui.QStandardItem(ptc.TTL(soup)))
+                    self.MODEL.setItem(i,j,QtGui.QStandardItem(ttl))
                 except:
                     self.MODEL.setItem(i,j,QtGui.QStandardItem('error'))
                 j += 1
