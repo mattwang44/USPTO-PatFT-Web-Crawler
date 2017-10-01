@@ -1,8 +1,8 @@
 # Web Crawler of USPTO PatFT Database
 Crawler for fetching information of US Patents and batch PDF download.  
 preview:  
-<img src="./pic/preview.png" width="350">
-<img src="./pic/browser.png" width="350">
+<img src="./pic/preview.png">
+
   
 ## Execution File Download
 The source code has packaged with pyinstaller in Windows  
@@ -10,22 +10,29 @@ The source code has packaged with pyinstaller in Windows
 2.[Single .exe file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
 
 ## Instruction 
-You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).    
-<img src="./pic/ins.png">  
-(1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table
+You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).  
+### Patent Fetcher
+(1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table  
+<img src="./pic/ins.png">
+
 1. Insert the patent numbers (PNs) to be processed in following ways:  
-   (a) Choose a CSV file with PNs in the first coulumn   
-   (b) Search with query. (The query should examined on PatFT.)  
+ (a) Choose a **CSV file with PNs in the first coulumn** 
+   ([example](https://github.com/mattwang44/USPTO-PatFT-Web-Crawler/blob/master/PN_sample.CSV)).  
+   (b) **Search with query** (The query should examined on PatFT first)  .
    The PNs should be shown in the table.
 
-2. (Optional) Filter the shown PNs with setting the patent types, range of application date & issue date.  
+2. (Optional) Filtering the shown PNs with **setting the patent types, range of application date & issue date**.  
    The filtered PNs are also shown on the table but will be deleted in the end of this process.
 
-3. Fetching the information of patnets shown in the table by web crawling.  
+3. **Fetching the information** of patents shown in the table by web crawling.  
 
-4. Download PDF of full-text or drawing section (or both simultaneously) of patents shown in the table.
+4. Download **PDF of full-text or drawing section** (or both simultaneously) of patents shown in the table.
 
-5. The table can be saved as a CSV file anytime.
+5. The **table can be saved** as a CSV file anytime.  
+
+### Browser  
+<img src="./pic/browser.png">
+In the second page, you can insert PN to show the PatFT web of this patent or open PDF with your default browser.
 
 ## Caution
 1. The program has some problems when fetching information of the patents issued before 1976. Still working on it.
