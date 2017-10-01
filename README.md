@@ -16,8 +16,9 @@ You can follow the instruction below or watch this [video](https://www.youtube.c
 <img src="./pic/ins.png">
 
 1. Insert the patent numbers (PNs) to be processed in following ways:  
-  (a) Choose a **CSV file with PNs in the first coulumn** ([example](https://github.com/mattwang44/USPTO-PatFT-Web-Crawler/blob/master/PN_sample.CSV)).  
-   (b) **Search with query**. (The query should examined on PatFT.)  
+   (a) Choose a **CSV file with PNs in the first coulumn** 
+   ([example](https://github.com/mattwang44/USPTO-PatFT-Web-Crawler/blob/master/PN_sample.CSV)).  
+   (b) **Search with query** (The query should examined on PatFT first)  .
    The PNs should be shown in the table.
 
 2. (Optional) Filtering the shown PNs with **setting the patent types, range of application date & issue date**.  
