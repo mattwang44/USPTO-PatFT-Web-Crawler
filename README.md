@@ -1,7 +1,7 @@
 # Web Crawler of USPTO PatFT Database
 Crawler for fetching information of US Patents and batch PDF download.  
 preview:  
-<img src="./pic/preview.png" width="370">
+<img src="./pic/preview.png">
 
   
 ## Execution File Download
