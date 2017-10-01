@@ -12,7 +12,7 @@ The source code has packaged with pyinstaller in Windows
 2.[Single .exe file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
 
 ## Instruction 
-You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It sould be easy :).  
+You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It should be easy to learn :).  
 ### Patent Fetcher
 (1) Insert PN (2) Filtering conditions (3) Information to be fetched (4) PDF type to be downloaded (5) Table  
 <img src="./pic/ins.png">
