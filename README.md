@@ -9,7 +9,7 @@ I've participated in patent analyzation project since Apr. 2017. Our team need t
 ## Download Execution File 
 The source code has packaged with pyinstaller in Windows  
 1.[Normal package](https://drive.google.com/open?id=0B4zCzLRoIx8eeWRwN1M3dFNTUE0)  
-2.[Single .exe file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
+2.[Single executable file](https://drive.google.com/open?id=0B4zCzLRoIx8eeG4wbUZDdVdrTDg)
 
 ## Instruction 
 You can follow the instruction below or watch this [video](https://www.youtube.com/watch?v=zqSEqUk2kgg). It should be easy to learn :).  
@@ -38,7 +38,7 @@ In the second page, you can insert PN to show the PatFT web of this patent or op
 
 ## Caution
 1. The program has some problems when fetching information of the patents issued before 1976. Still working on it.
-2. Searching with long query takes a lot of time, same as it takes on PatFT ([example](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&u=%2Fnetahtml%2FPTO%2Fsearch-adv.htm&r=0&p=1&f=S&l=50&Query=%28%28%28CPC%2FA62B%24+OR+CPC%2FB65H%24%29+OR+CPC%2FF16D%24%29+OR+CPC%2FB66D%24%29+AND+%28%28brak%24+OR+lock%24%29+OR+%28retract%24+OR+rewind%24%29%29+AND+%28%28%28lifeline+OR+lanyard%29+OR+%22safety+line%22%29+OR+cable%29&d=PTXT)). I tried using threading in the program but it leads to more time consumed, and multiprocessing leads to bad connection. If you have a long query with less than 500 results, copying the patents number to a CSV file on your own and insert the file sould be faster.  
+2. Searching with long query takes a lot of time, same as it takes on PatFT ([example](http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&u=%2Fnetahtml%2FPTO%2Fsearch-adv.htm&r=0&p=1&f=S&l=50&Query=%28%28%28CPC%2FA62B%24+OR+CPC%2FB65H%24%29+OR+CPC%2FF16D%24%29+OR+CPC%2FB66D%24%29+AND+%28%28brak%24+OR+lock%24%29+OR+%28retract%24+OR+rewind%24%29%29+AND+%28%28%28lifeline+OR+lanyard%29+OR+%22safety+line%22%29+OR+cable%29&d=PTXT)). I tried using threading in the program but it leads to more time consumed, and multiprocessing leads to bad connection. If you have a long query with less than 500 results, copying the patents number to a CSV file on your own and insert the file should be faster.  
 3. If you encountered any problems or have any suggestion (like adding other function), feel free to [contact me](http://mattwang44.wixsite.com/main/contact)!
 
 
