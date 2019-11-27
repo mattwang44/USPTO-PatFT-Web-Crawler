@@ -71,10 +71,10 @@ class MainWindow(QMainWindow, ui):
         # Additional Initialization
         Initial_path = QDir.currentPath()
         self.setWindowIcon(QIcon(":/IAID.ico"))
-        self.PNloc.setText(Initial_path+'/PN.CSV')
+        self.PNloc.setText(os.path.join(Initial_path, 'PN_sample.CSV'))
         self.Querybox.setVisible(False)
         self.DB.setVisible(False)
-        self.PDFloc.setText(Initial_path+'/PDF_Download')
+        self.PDFloc.setText(os.path.join(Initial_path, 'PDF_Download'))
         self.APT.setDate(QtCore.QDate(int(time.strftime("%Y")), int(time.strftime("%m")), int(time.strftime("%d"))))
         self.IDT.setDate(QtCore.QDate(int(time.strftime("%Y")), int(time.strftime("%m")), int(time.strftime("%d"))))
         self.TTL.setChecked(True)
@@ -576,7 +576,7 @@ class MainWindow(QMainWindow, ui):
         except:
             return
         if os.path.exists(path):
-            with open(path+'\\Result.CSV', 'w', newline='') as stream:
+            with open(os.path.join(path, 'Result.CSV'), 'w', newline='') as stream:
                 writer = csv.writer(stream)
                 header = []
                 for i in range(17):
